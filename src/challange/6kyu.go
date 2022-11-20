@@ -1,5 +1,8 @@
 package challange
 
+import (
+	"fmt"
+)
 
 func DecodeRomeInt(roman string) int {
 	rome_dict := map[string]int{
@@ -31,5 +34,45 @@ func DecodeRomeInt(roman string) int {
 	  res += rome_dict[string(cur_int)] * count_sequence
 	return res
   }
+
+
+func CreatePhoneNumber(numbers [10]uint) string {
+	res := []interface{}{}
+	for _, val := range numbers {
+		res = append(res, val)
+	} 
+	return fmt.Sprintf("(%d%d%d) %d%d%d-%d%d%d%d", res...) 
+}
+
+  
+func ValidBraces(str1 string) bool {
+// "(){}[]"   =>  True
+// "([{}])"   =>  True
+// "(}"       =>  False
+
+str := []rune{}
+str = append(str, rune(str1[0]))
+i := 0
+	for _, v := range str1[1:] {
+		str = append(str, v)
+		if len(str) != 1 {
+			if int(str[i]/10) == int(v/10) && str[i]< v{
+				str = str[:i]
+				if i > 0 {
+					i -= 1
+				}
+				
+			} else {
+				i++
+			}
+		}
+	}
+	if len(str) > 0 {
+		return false
+	}
+	return true
+}
+
+
 
   
