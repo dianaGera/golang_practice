@@ -1,5 +1,9 @@
 package challange
 
+import (
+	"math"
+)
+
 
 // Insertion sort
 func SortNumbers(numbers []int) []int {
@@ -20,3 +24,20 @@ func SortNumbers(numbers []int) []int {
 		return []int{} 
 	}
 }
+
+
+
+func FindNextSquare(sq int64) int64 {
+	// 121 --> 144
+	// 625 --> 676
+	// 114 --> -1 since 114 is not a perfect square
+	i := math.Sqrt(float64(sq))
+	d := math.Floor(i)
+	remainder := i - d
+	if remainder == 0 {
+	  d++
+	  res := int64(math.Pow(d, 2))
+	  return res
+	}
+	return -1
+  }
