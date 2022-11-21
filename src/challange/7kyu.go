@@ -11,15 +11,15 @@ func SortNumbers(numbers []int) []int {
 	// solution(NULL)              # should return NULL
 	if cap(numbers) > 0 {
 		for i := range numbers {
-		y := i
-		for y > 0 && numbers[y] < numbers[y-1] {
-			temp := numbers[y]
-			numbers[y] = numbers[y-1]
-			numbers[y-1] = temp
-			y -= 1
+			y := i
+			for y > 0 && numbers[y] < numbers[y-1] {
+				temp := numbers[y]
+				numbers[y] = numbers[y-1]
+				numbers[y-1] = temp
+				y -= 1
+			}
 		}
-	}
-	return numbers
+		return numbers
 	} else {
 		return []int{} 
 	}
