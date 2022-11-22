@@ -11,20 +11,22 @@ type PosPeaks struct {
 }
 
 func main() {
-	walk := []rune{'e', 'w', 'w', 'w', 'e', 'e', 'w', 'e'}
-	res := [2]int{0, 0}
-
-	for _, v := range walk {
-		println(v)
-		switch v {
-			case 110: res[0]++;
-			case 115: res[0]--;
-			case 119: res[1]++;
-			case 101: res[1]--;
-		}
+	arr := []string{"NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "NORTH"}
+	dir := map[string]string{
+		"NORTH": "SOUTH",
+		"SOUTH": "NORTH",
+		"WEST": "EAST",
+		"EAST": "WEST",
 	}
-	fmt.Println(res)
-	// if res[0] + res[1] == 0 {
-	// 	return true
-	// }
+	res := []string{"START"}
+	for _, v := range arr {
+		if res[len(res)-1] == dir[v] {
+			res = res[0:len(res)-1]
+		} else {
+			res = append(res, v)
+		}
+
+		fmt.Println(res[1:])
+	}
+	
 }

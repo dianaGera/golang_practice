@@ -35,3 +35,29 @@ func PickPeaks(array []int) PosPeaks {
 	}
 	return res
 }
+
+
+func DirReduc(arr []string) []string {
+	// improve direction
+	// In ["NORTH", "SOUTH", "EAST", "WEST"], the direction "NORTH" + "SOUTH" 
+	// is going north and coming back right away.
+	// The path becomes ["EAST", "WEST"], now "EAST" and "WEST" annihilate each other, 
+	// therefore, the final result is [] (nil in Clojure).
+	dir := map[string]string{
+	 "NORTH": "SOUTH",
+	 "SOUTH": "NORTH",
+	 "WEST": "EAST",
+	 "EAST": "WEST",
+   }
+   res := []string{"START"}
+   for _, v := range arr {
+	 if res[len(res)-1] == dir[v] {
+	   res = res[0:len(res)-1]
+	 } else {
+	   res = append(res, v)
+	 }
+   }
+   return res[1:]
+ }
+
+
