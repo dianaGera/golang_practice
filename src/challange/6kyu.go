@@ -2,6 +2,7 @@ package challange
 
 import (
 	"fmt"
+	"strings"
 )
 
 func DecodeRomeInt(roman string) int {
@@ -74,5 +75,44 @@ i := 0
 }
 
 
+func evenToUpper(str string) string {
+	res := ""
+	str = strings.ToUpper(str)
+	count := 0
+	for i, v := range str {
+		if string(v) == " " {count++}
+		if count == 0 || count%2 == 0 {
+			res += string(v)
+		} else {
+			res += strings.ToLower(string(v))
+		}
+		count++
+	}
 
+	return res
+
+}
+
+
+func IsValidWalk(walk []rune) bool {
+	if len(walk) != 10 {
+	  return false
+	}
+	
+	x, y := 0, 0
+	for _, r := range walk {
+	  switch r {
+	  case 'n': y++
+	  case 's': y--
+	  case 'e': x++
+	  case 'w': x--
+	  }
+	}
+	
+	if x == 0 && y == 0 {
+	  return true
+	}
+	
+	return false
+  }
   
