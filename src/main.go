@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	// 'strings'
+	"strings"
 )
 
 type PosPeaks struct {
@@ -11,22 +11,25 @@ type PosPeaks struct {
 }
 
 func main() {
-	arr := []string{"NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "NORTH"}
-	dir := map[string]string{
-		"NORTH": "SOUTH",
-		"SOUTH": "NORTH",
-		"WEST": "EAST",
-		"EAST": "WEST",
-	}
-	res := []string{"START"}
-	for _, v := range arr {
-		if res[len(res)-1] == dir[v] {
-			res = res[0:len(res)-1]
-		} else {
-			res = append(res, v)
-		}
+	str := "stress"
+	char_dict := map[string][]int{}
+	res := -1
 
-		fmt.Println(res[1:])
+	for i, v := range str {
+		ch := char_dict[strings.ToUpper(string(v))]
+		if len(ch) == 0 {
+			char_dict[strings.ToUpper(string(v))] = []int{i, 1}
+		} else {
+			char_dict[strings.ToUpper(string(v))][1]++
+		}
 	}
-	
+	for _, val := range char_dict {
+		if val[1] == 1 {
+			if res == -1 || res > val[0] {
+				res = val[0]
+			}
+		}
+	}
+	fmt.Println(string(str[res]))
+
 }

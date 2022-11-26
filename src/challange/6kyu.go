@@ -79,7 +79,7 @@ func evenToUpper(str string) string {
 	res := ""
 	str = strings.ToUpper(str)
 	count := 0
-	for i, v := range str {
+	for _, v := range str {
 		if string(v) == " " {count++}
 		if count == 0 || count%2 == 0 {
 			res += string(v)
