@@ -1,33 +1,17 @@
-package challange
-
 import (
-	"fmt"
-	"sort"
-	"strconv"
 	"strings"
 	"unicode"
 )
 
+
 type Letters struct {
 	count int
-	set   string
-	char  string
+	set   byte
+	char  byte
 }
 
-// NOT Solved
-//
-//	It("should handle basic cases 1", func() {
-//		dotest("Are they here", "yes, they are here", "2:eeeee/2:yy/=:hh/=:rr")
-//		dotest("uuuuuu", "uuuuuu", "=:uuuuuu")
-//		dotest("looping is fun but dangerous", "less dangerous than coding",
-//				"1:ooo/1:uuu/2:sss/=:nnn/1:ii/2:aa/2:dd/2:ee/=:gg")
-func Mix() {
-	// create dict key -> letter {s1: count, s2: count}
-	// create list[]Letters with [count, s num, char]
-	// do sort
-	s1, s2 := "Are they here", "yes, they are here"
-
-	charset := make(map[string]map[int]int)
+func Mix(s1, s2 string) string {
+    charset := make(map[string]map[int]int)
 	for _, v := range s1 {
 
 		if string(v) == strings.ToLower(string(v)) && unicode.IsLetter(v) {
@@ -48,43 +32,62 @@ func Mix() {
 			}
 		}
 	}
+  
 	res_list := []Letters{}
 	for letter, val := range charset {
-		temp := "="
-		if val[1] > val[2] && val[1] > 1 {
+		// fmt.Println(letter)
+		temp := "3"
+		set := 0
+		if val[1] > val[2] {
 			temp = "1"
-		} else if val[2] > val[1] && val[2] > 1 {
+			set = 1
+		} else if val[2] > val[1] {
 			temp = "2"
-		}
-		set, _ := strconv.Atoi(temp)
-		if set == 0 {
-			set = val[1]
+			set = 2
+		} else {
+			temp = "3"
+			set = 1
 		}
 
-		if set > 1 {
+		if val[set] > 1 {
 			res_list = append(
 				res_list,
 				Letters{
 					count: val[set],
-					set:   temp,
-					char:  letter,
+					set:   temp[0],
+					char:  letter[0],
 				},
 			)
 		}
 	}
 
-	// buble sort
-	for i, _ := range res_list {
-		for j, _ := range res_list[0 : len(res_list)-i-1] {
+	for i := 0; i < len(res_list)-1; i++ {
+		for j := 0; j < len(res_list)-i-1; j++ {
 
-			if res_list[j].count < res_list[j+1].count {
-				temp := res_list[j].count
-				res_list[j].count = res_list[j-1].count
-				res_list[j-1].count = temp
+			if int(res_list[j].char) > int(res_list[j+1].char) {
+				res_list[j], res_list[j+1] = res_list[j+1], res_list[j]
 			}
-
+			if byte(res_list[j].set) > byte(res_list[j+1].set) {
+				res_list[j], res_list[j+1] = res_list[j+1], res_list[j]
+			}
+			if res_list[j].count < res_list[j+1].count {
+				res_list[j], res_list[j+1] = res_list[j+1], res_list[j]
+			}
 		}
 	}
-	fmt.Println(sort.StringsAreSorted(res_list))
+	res_str := ""
+	for _, v := range res_list {
+		if string(v.set) != "3" {
+			res_str += string(v.set) + ":"
+		} else {
+			res_str += "=:"
+		}
+		res_str += strings.Repeat(string(v.char), v.count) + "/"
 
+	}
+  if len(res_str) > 0 {
+     return res_str[:len(res_str)-1]
+  } else {
+    return ""
+  }
 }
