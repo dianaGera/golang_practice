@@ -1,11 +1,11 @@
-package main
+package challange
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 	"unicode"
-	"sort"
 )
 
 type Letters struct {
@@ -14,7 +14,14 @@ type Letters struct {
 	char  string
 }
 
-func main() {
+// NOT Solved
+//
+//	It("should handle basic cases 1", func() {
+//		dotest("Are they here", "yes, they are here", "2:eeeee/2:yy/=:hh/=:rr")
+//		dotest("uuuuuu", "uuuuuu", "=:uuuuuu")
+//		dotest("looping is fun but dangerous", "less dangerous than coding",
+//				"1:ooo/1:uuu/2:sss/=:nnn/1:ii/2:aa/2:dd/2:ee/=:gg")
+func Mix() {
 	// create dict key -> letter {s1: count, s2: count}
 	// create list[]Letters with [count, s num, char]
 	// do sort
