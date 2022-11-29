@@ -1,3 +1,5 @@
+package challange
+
 import (
 	"strings"
 	"unicode"
