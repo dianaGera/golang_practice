@@ -1,118 +1,48 @@
-package challange
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+// - - - - - - - - - - Persistent Bugger - - - - - - - - - - - - - - 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-import (
-	"fmt"
-	"strings"
-)
+// 39 --> 3 (because 3*9 = 27, 2*7 = 14, 1*4 = 4 and 4 has only one digit)
+// 999 --> 4 (because 9*9*9 = 729, 7*2*9 = 126, 1*2*6 = 12, and finally 1*2 = 2)
+// 4 --> 0 (because 4 is already a one-digit number)
+// check loading time
 
-func DecodeRomeInt(roman string) int {
-	rome_dict := map[string]int{
-		  "I": 1,
-		  "V": 5, 
-		  "X": 10, 
-		  "L": 50, 
-		  "C": 100, 
-		  "D": 500, 
-		  "M": 1000,
-	  }
-  
-	  cur_int := string(roman[0])
-	  count_sequence := 1
-	  res := 0
-	  for _, v := range roman[1:] {
-		  if cur_int == string(v) {
-			  count_sequence++
-		  } else {
-			  if rome_dict[string(cur_int)] > rome_dict[string(v)] {
-				  res += rome_dict[string(cur_int)] * count_sequence
-			  } else {
-				  res -= rome_dict[string(cur_int)] * count_sequence
-			  }
-			  cur_int = string(v)
-			  count_sequence = 1
-		  }
-	  }
-	  res += rome_dict[string(cur_int)] * count_sequence
-	return res
+
+func Persistence(n int) int {
+  steps := 0
+	for n >= 10 {
+    m := 1
+    for n > 0 {
+      m *= n % 10
+      n /= 10
+    }
+    n = m
+    steps++
   }
-
-
-func CreatePhoneNumber(numbers [10]uint) string {
-	res := []interface{}{}
-	for _, val := range numbers {
-		res = append(res, val)
-	} 
-	return fmt.Sprintf("(%d%d%d) %d%d%d-%d%d%d%d", res...) 
-}
-
-  
-func ValidBraces(str1 string) bool {
-// "(){}[]"   =>  True
-// "([{}])"   =>  True
-// "(}"       =>  False
-
-str := []rune{}
-str = append(str, rune(str1[0]))
-i := 0
-	for _, v := range str1[1:] {
-		str = append(str, v)
-		if len(str) != 1 {
-			if int(str[i]/10) == int(v/10) && str[i]< v{
-				str = str[:i]
-				if i > 0 {
-					i -= 1
-				}
-				
-			} else {
-				i++
-			}
-		}
-	}
-	if len(str) > 0 {
-		return false
-	}
-	return true
+  return steps
 }
 
 
-func evenToUpper(str string) string {
-	res := ""
-	str = strings.ToUpper(str)
-	count := 0
-	for _, v := range str {
-		if string(v) == " " {count++}
-		if count == 0 || count%2 == 0 {
-			res += string(v)
-		} else {
-			res += strings.ToLower(string(v))
-		}
-		count++
-	}
+// - - - - - - - - - recursion - - - - - - - - - - -
 
-	return res
+import "strconv"
 
+func Persistence(n int) int {
+  return Calc(n, 0)
 }
-
-
-func IsValidWalk(walk []rune) bool {
-	if len(walk) != 10 {
-	  return false
-	}
-	
-	x, y := 0, 0
-	for _, r := range walk {
-	  switch r {
-	  case 'n': y++
-	  case 's': y--
-	  case 'e': x++
-	  case 'w': x--
-	  }
-	}
-	
-	if x == 0 && y == 0 {
-	  return true
-	}
-	
-	return false
+func Calc(n int, i int) int {
+  if (n < 10) {
+    return i
   }
-  
+  nStr := strconv.Itoa(n)  // int(str)
+  subResult := 1
+  for _, char := range nStr {
+    num, err := strconv.Atoi(string(char))  // str(int)
+    if err != nil {
+      panic(err)
+    }
+    subResult = num * subResult
+  }
+  return Calc(subResult, i + 1)
+}
+ 
