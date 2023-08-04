@@ -1,3 +1,43 @@
+package main
+
+
+import (
+	"fmt"
+  "math"
+	"strconv"
+)
+
+func Persistence(n int) (res_num int) {
+  str_num := strconv.Itoa(n)
+  res_num = -1
+  temp := 0
+  res := "-1"
+  for idx := 1; idx <= len(str_num); idx++ {
+    last_num := n % int(math.Pow(10, float64(idx))) / int(math.Pow(10, float64(idx-1)))
+    if temp < last_num {
+      temp = last_num
+    } else {
+      res = str_num[:len(str_num)-2] + string(str_num[len(str_num) - idx]) + string(str_num[len(str_num) -1:])
+      res_num, _ = strconv.Atoi(res)
+      break
+    }
+  }
+  return res_num
+}
+
+func main() {
+	result := Persistence(12)
+	fmt.Println("result", result)
+}
+
+
+
+
+
+
+
+
+
 package challange
 
 import (
